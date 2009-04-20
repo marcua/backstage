@@ -1,4 +1,4 @@
 RewriteEngine On
 RewriteBase /backstage/
-RewriteRule ^dispatch\.fcgi/ - [L]
-RewriteRule ^ask$ dispatch.fcgi/$1 [L]
+RewriteRule ^backstage\.fcgi/ - [L]
+RewriteRule ^ask$ backstage.fcgi/$1 [L]
