@@ -4,6 +4,7 @@ import sqlite
 import urllib2
 import csv
 import cgi
+import simplejson
 
 def urldecode(query):
    d = {}
@@ -38,7 +39,10 @@ def myapp(environ, start_response):
     
     con = sqlite.connect('mydatabase.db')
     cur = con.cursor()
-    cur.execute("DROP TABLE %s;" % (table))
+    cur.execute("SELECT name FROM sqlite_master WHERE type='table' \
+      AND name='%s';" % (table))
+    if cur.fetchone() != None:
+      cur.execute("DROP TABLE %s;" % (table))
     cur.execute("CREATE TABLE %s (%s);" % (table, fields))
     for line in contents:
       values = line.strip()
@@ -50,10 +54,12 @@ def myapp(environ, start_response):
     cur.execute(query)
 
     results = []
-    results.append(", ".join([name[0] for name in cur.description]) + "\n")
-    results.extend([", ".join(line) + "\n" for line in cur.fetchall()])
-    return results
-
+    headings = [name[0] for name in cur.description]
+    for result in cur.fetchall():
+      results.append(dict(zip(headings, result)))
+    results = { table : results }
+    return simplejson.dumps(results)
+      
 if __name__ == '__main__':
     from fcgi import WSGIServer
     WSGIServer(myapp).run()
