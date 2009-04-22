@@ -8,8 +8,12 @@ A Database
 
 <body>
 <form method=get action="ask">
+Sample query: select * from movies, directors where movies.director = directors.director;
+
+Sample table URIs: http://playground.marcua.net/backstage/webserver/data/movies.csv,http://playground.marcua.net/backstage/webserver/data/directors.csv
+
 Query: <input type="text" name="query"></input>
-DB: <input type="text" name="uri"></input>
+Table URIs: <input type="text" name="uri"></input>
 <input type="submit"></input>
 </form>
 </html>
