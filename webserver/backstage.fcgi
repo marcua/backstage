@@ -19,14 +19,7 @@ def urldecode(query):
  
    return d
 
-def myapp(environ, start_response):
-    start_response('200 OK', [('Content-Type', 'text/plain')])
-    args = cgi.parse_qs(environ['QUERY_STRING'])
-    
-
-    query = args['query'][0]
-    uri = args['uri'][0]
-
+def load_table(uri, cur):
     table = uri.split('/')[-1]
     table = table.split('.')[0]
 
@@ -37,19 +30,32 @@ def myapp(environ, start_response):
       fields += ","
     fields = fields.rstrip(',')
     
-    con = sqlite.connect('mydatabase.db')
-    cur = con.cursor()
     cur.execute("SELECT name FROM sqlite_master WHERE type='table' \
       AND name='%s';" % (table))
-    if cur.fetchone() != None:
-      cur.execute("DROP TABLE %s;" % (table))
-    cur.execute("CREATE TABLE %s (%s);" % (table, fields))
-    for line in contents:
-      values = line.strip()
-      values = "','".join([val.strip() for val in values.split(",")])
-      values = "'" + values + "'"
-      sql = "INSERT INTO %s (%s) VALUES (%s);" % (table, fields, values)
-      cur.execute(sql)
+    if cur.fetchone() == None:
+#      cur.execute("DROP TABLE %s;" % (table))
+      cur.execute("CREATE TABLE %s (%s);" % (table, fields))
+      for line in contents:
+        values = line.strip()
+        values = "','".join([val.strip() for val in values.split(",")])
+        values = "'" + values + "'"
+        sql = "INSERT INTO %s (%s) VALUES (%s);" % (table, fields, values)
+        cur.execute(sql)
+    return table
+
+def myapp(environ, start_response):
+    start_response('200 OK', [('Content-Type', 'text/plain')])
+#    start_response('200 OK', [('Content-Type', 'application/json')])
+    args = cgi.parse_qs(environ['QUERY_STRING'])
+    
+
+    query = args['query'][0]
+    uri = args['uri'][0]
+
+    con = sqlite.connect('mydatabase.db')
+    cur = con.cursor()
+    table_uris = uri.split(',')
+    tables = [load_table(uri, cur) for uri in table_uris]
     con.commit()
     cur.execute(query)
 
@@ -57,7 +63,7 @@ def myapp(environ, start_response):
     headings = [name[0] for name in cur.description]
     for result in cur.fetchall():
       results.append(dict(zip(headings, result)))
-    results = { table : results }
+    results = { "query" : results }
     return simplejson.dumps(results)
       
 if __name__ == '__main__':
