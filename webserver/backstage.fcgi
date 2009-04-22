@@ -51,6 +51,9 @@ def myapp(environ, start_response):
 
     query = args['query'][0]
     uri = args['uri'][0]
+    callback = None
+    if 'callback' in args:
+      callback = args['callback'][0]
 
     con = sqlite.connect('mydatabase.db')
     cur = con.cursor()
@@ -64,7 +67,10 @@ def myapp(environ, start_response):
     for result in cur.fetchall():
       results.append(dict(zip(headings, result)))
     results = { "query" : results }
-    return simplejson.dumps(results)
+    return_str = simplejson.dumps(results)
+    if callback != None:
+      return_str = callback + "(" + return_str + ");";
+    return return_str
       
 if __name__ == '__main__':
     from fcgi import WSGIServer
