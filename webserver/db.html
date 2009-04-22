@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<TITLE>
+A Database
+</TITLE>
+</head>
+
+
+<body>
+<form method=get action="ask">
+Sample query: 'select * from movies, directors where movies.director = directors.director;'<br><br>
+
+Sample table URIs: 'http://playground.marcua.net/backstage/webserver/data/movies.csv,http://playground.marcua.net/backstage/webserver/data/directors.csv'<br><br>
+
+Query: <input type="text" name="query"></input>
+Table URIs: <input type="text" name="uri"></input>
+<input type="submit"></input>
+</form>
+</html>
