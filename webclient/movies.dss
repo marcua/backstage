@@ -1,0 +1,15 @@
+{.section movies}
+<table>
+{.repeated section @}
+<tr> 
+	<td valign="top"><a href="http://www.imdb.com/title/{titleid}/"><img src="{image}" width="23" height="32" border="0"></a>&nbsp;</td>
+	<td align="right" valign="top"><img src="/images/b.gif" width="1" height="6"><br>*.</td>
+	<td valign="top"><img src="/images/b.gif" width="1" height="6"><br><a href="http://www.imdb.com/title/{titleid}/">{title}</a> ({year})</td>
+</tr>	
+
+{.end}
+</table>    
+{.or}
+	<p><em>(No page content matches)</em></p>
+{.end}
+
