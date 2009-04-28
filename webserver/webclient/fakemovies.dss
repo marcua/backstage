@@ -1,0 +1,15 @@
+{.section query}
+<table>
+{.repeated section @}
+<tr> 
+	<td>{movies.title}</td>
+	<td>({movies.year})</td>
+	<td><i>{directors.director}</i></td>
+</tr>	
+
+{.end}
+</table>    
+{.or}
+	<p><em>(No page content matches)</em></p>
+{.end}
+

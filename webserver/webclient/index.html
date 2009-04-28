@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>Backstage &mdash; Data Is Your Friend</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="description" content="Backstage is a neat web database project." />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<link rel="stylesheet" href="backstage.css" type="text/css" media="all" />
+	
+	<script type="text/javascript" src="lib/json-template.js" /></script>
+	<script type="text/javascript" src="lib/jquery-1.3.2.min.js" /></script>
+	<script type="text/javascript" src="src/backstage.js" /></script>
+	<script type="text/javascript" src="src/demo.js" /></script>
+</head>
+
+<body onLoad="mergeTemplates();">
+
+<div id="container">
+<h1>Backstage Test 1</h1>
+<p>This is a simple test of the ability of backstage to display a rendered template.</p>
+<hr />
+
+<div id="playlist" datasource="playlist.json" template="playlist.dss" filter="playcount > 10">
+</div>
+
+<hr />
+
+<div class="debug">
+	<h2>Debug</h2>
+	<p>Timing information goes here.</p>
+</div>
+</body>
+</html>
