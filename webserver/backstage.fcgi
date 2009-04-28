@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sqlite
+import sqlite3
 import urllib2
 import csv
 import cgi
