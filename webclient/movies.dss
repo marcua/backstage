@@ -1,4 +1,4 @@
-{.section movies}
+{.section query}
 <table>
 {.repeated section @}
 <tr> 
