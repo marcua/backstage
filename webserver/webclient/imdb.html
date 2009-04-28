@@ -687,15 +687,6 @@ table#outerbody #content-2-wide #main {
  <div id="nb15botbg">
  
   <div id="nb15tabs">
-  <a id="nb15nowplaying" href="/nowplaying/" onClick="(new Image()).src='/rg/nav-nowplaying/navbar/images/b.gif?link=/nowplaying/';"><i>Now Playing</i></a>
-   <a id="nb15news" href="/news/" onClick="(new Image()).src='/rg/nav-news/navbar/images/b.gif?link=/news/';"><i>Movie/TV News</i></a>
-   <a id="nb15mm" href="/mymovies/list" onClick="(new Image()).src='/rg/nav-mymovies/navbar/images/b.gif?link=/mymovies/list';"><i>My Movies</i></a>
-   <a id="nb15dvd" href="/sections/dvd/" onClick="(new Image()).src='/rg/nav-video/navbar/images/b.gif?link=/sections/dvd/';"><i>DVD New Releases</i></a>
-   <a id="nb15imdbtv" href="/sections/tv/" onClick="(new Image()).src='/rg/nav-imdbtv/navbar/images/b.gif?link=/sections/tv/';"><i>IMDbTV</i></a>
-   <a id="nb15boards" href="/boards/" onClick="(new Image()).src='/rg/nav-boards/navbar/images/b.gif?link=/boards/';"><i>Message Boards</i></a>
-   <a id="nb15showtimes" href="/showtimes/" onClick="(new Image()).src='/rg/nav-showtimes/navbar/images/b.gif?link=/showtimes/';"><i>Showtimes &amp; Tickets</i></a>
-   <a id="nb15pro" href="http://pro.imdb.com/r/imdb-nav/" ><i>IMDbPro</i></a>
-   <a id="nb15resume" href="http://resume.imdb.com/" onClick="(new Image()).src='/rg/nav-resume/navbar/images/b.gif?link=http://resume.imdb.com/';"><i>IMDb Resume</i></a>
   </div>
 
   <div id="nb15topbg">
@@ -745,7 +736,7 @@ ul li {
 	datasource="http://backstage.local/ask?callback=?" 
 	dataset="http://backstage.local/data/movies.csv,http://backstage.local/data/directors.csv"
 	template="fakemovies.dss" 
-	query="SELECT * FROM movies, directors WHERE movies.director = directors.director"
+	query="SELECT movies.title AS title, movies.year AS year, directors.director AS director FROM movies, directors WHERE movies.director = directors.director"
 </div>
 
 </td>

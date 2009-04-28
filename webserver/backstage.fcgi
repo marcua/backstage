@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sqlite3
+import sqlite
 import urllib2
 import csv
 import cgi
@@ -48,7 +48,6 @@ def myapp(environ, start_response):
 #    start_response('200 OK', [('Content-Type', 'application/json')])
     args = cgi.parse_qs(environ['QUERY_STRING'])
     
-
     query = args['query'][0]
     uri = args['uri'][0]
 

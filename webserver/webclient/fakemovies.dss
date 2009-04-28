@@ -2,14 +2,14 @@
 <table>
 {.repeated section @}
 <tr> 
-	<td>{movies.title}</td>
-	<td>({movies.year})</td>
-	<td><i>{directors.director}</i></td>
+	<td>{title}</td>
+	<td>({year})</td>
+	<td><i>{director}</i></td>
 </tr>	
 
 {.end}
 </table>    
-{.or}
+{.or}	 	
 	<p><em>(No page content matches)</em></p>
 {.end}
 
