@@ -1,0 +1,22 @@
+{.section query}
+<table>
+<tr>
+	<th>Title</th><th>Author</th><th>Year</th><th>Venue</th><th>Publication Type</th>
+</tr>
+
+{.repeated section @}
+<tr> 
+	<td>{title}</td>
+	<td>{author}</td>
+	<td>{year}</td>
+	<td>{venue}</td>
+	<td>{pubtype}</td>
+</tr>
+<tr>
+	<td colspan=5>{url}</td>
+</tr>	
+{.end}
+</table>    
+{.or}	 	
+	<p><em>(No page content matches)</em></p>
+{.end}

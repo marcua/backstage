@@ -75,7 +75,7 @@ id,title,author,year,venue,pubtype,url
 73,This is the title of paper 73,first last13,1977,venue location7,pubtype0,http://portal.acm.org/paperdb/location/of/paper73
 74,This is the title of paper 74,first last6,1975,venue location4,pubtype2,http://portal.acm.org/paperdb/location/of/paper74
 75,This is the title of paper 75,first last11,1982,venue location5,pubtype0,http://portal.acm.org/paperdb/location/of/paper75
-76,This is the title of paper 76,first last7,1970,venue location8,pubtype3,http://portal.acm.org/paperdb/location/of/paper76
+76,This is the title of paper 76,first last7,1970,venue location2,pubtype3,http://portal.acm.org/paperdb/location/of/paper76
 77,This is the title of paper 77,first last6,1970,venue location6,pubtype4,http://portal.acm.org/paperdb/location/of/paper77
 78,This is the title of paper 78,first last2,1977,venue location9,pubtype3,http://portal.acm.org/paperdb/location/of/paper78
 79,This is the title of paper 79,first last19,1980,venue location4,pubtype0,http://portal.acm.org/paperdb/location/of/paper79
@@ -85,7 +85,7 @@ id,title,author,year,venue,pubtype,url
 83,This is the title of paper 83,first last19,1981,venue location8,pubtype4,http://portal.acm.org/paperdb/location/of/paper83
 84,This is the title of paper 84,first last13,1981,venue location4,pubtype4,http://portal.acm.org/paperdb/location/of/paper84
 85,This is the title of paper 85,first last6,1980,venue location0,pubtype2,http://portal.acm.org/paperdb/location/of/paper85
-86,This is the title of paper 86,first last2,1969,venue location8,pubtype4,http://portal.acm.org/paperdb/location/of/paper86
+86,This is the title of paper 86,first last2,1969,venue location7,pubtype4,http://portal.acm.org/paperdb/location/of/paper86
 87,This is the title of paper 87,first last8,1970,venue location9,pubtype1,http://portal.acm.org/paperdb/location/of/paper87
 88,This is the title of paper 88,first last4,1980,venue location0,pubtype2,http://portal.acm.org/paperdb/location/of/paper88
 89,This is the title of paper 89,first last19,1980,venue location6,pubtype1,http://portal.acm.org/paperdb/location/of/paper89
@@ -94,7 +94,7 @@ id,title,author,year,venue,pubtype,url
 92,This is the title of paper 92,first last1,1982,venue location9,pubtype1,http://portal.acm.org/paperdb/location/of/paper92
 93,This is the title of paper 93,first last8,1977,venue location5,pubtype3,http://portal.acm.org/paperdb/location/of/paper93
 94,This is the title of paper 94,first last0,1976,venue location0,pubtype1,http://portal.acm.org/paperdb/location/of/paper94
-95,This is the title of paper 95,first last16,1982,venue location8,pubtype1,http://portal.acm.org/paperdb/location/of/paper95
+95,This is the title of paper 95,first last16,1982,venue location2,pubtype1,http://portal.acm.org/paperdb/location/of/paper95
 96,This is the title of paper 96,first last11,1975,venue location8,pubtype2,http://portal.acm.org/paperdb/location/of/paper96
 97,This is the title of paper 97,first last18,1980,venue location6,pubtype1,http://portal.acm.org/paperdb/location/of/paper97
 98,This is the title of paper 98,first last11,1974,venue location1,pubtype4,http://portal.acm.org/paperdb/location/of/paper98

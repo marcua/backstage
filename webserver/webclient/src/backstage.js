@@ -15,7 +15,7 @@ function resetDatabase() {
 }
 
 function bulkload(url, data) {
-    console.time("Bulkloading " + url);
+    console.time("Performing Bulkload Insertion " + url);
 	var rows = data.split('\n');
 	var fields = rows[0].split(',');
 	var name = databaseNameFromUrl(url);
@@ -31,14 +31,14 @@ function bulkload(url, data) {
         var sql = "INSERT INTO " + name + " (" + fields.toString() + ") VALUES (" + rowfields.join() + ");";
         db.execute(sql);
 	}
-	console.timeEnd("Bulkloading " + url);
+	console.timeEnd("Performing Bulkload Insertion " + url);
 }
 
 jQuery.fn.templateRemote = function(link) {
 	var me = this;
-    console.time("Downloading template");
+    console.time("Fetching Remote Template");
 	$.get(link, function(data) {
-	    console.timeEnd("Downloading template");
+	    console.timeEnd("Fetching Remote Template");
 	    try {
             $(me).template(data);
         }
@@ -55,7 +55,7 @@ jQuery.fn.template = function(value) {
     else {
         this.data("backstage_template", value);
         if (this.templateData() != undefined) {
-            this.render();
+            this.renderTemplate();
         }
         return this;
     }
@@ -68,13 +68,13 @@ jQuery.fn.templateData = function(value) {
     else {
         this.data("backstage_templateData", value);
         if (this.template() != undefined) {
-            this.render();
+            this.renderTemplate();
         }
         return this;
     }
 };
 
-jQuery.fn.renderLocal = function(datasource, dataset, query) {
+jQuery.fn.queryLocal = function(datasource, dataset, query) {
 	// First download any data source we don't already have
 	window.numberToGo = 0; // HACK HACK HACK
 	var hadToLoad = 0;
@@ -84,18 +84,18 @@ jQuery.fn.renderLocal = function(datasource, dataset, query) {
 	for (var i=0; i<datasources.length; i++) {
 	    var datasource = databaseNameFromUrl(datasources[i]);
 		if (! tableExists(datasource)) {
-			console.time("Downloading " + datasources[i]);
+			console.time("Bulkloading Dataset " + datasources[i]);
 			numberToGo++;
 			hadToLoad++;
 			$.get(datasources[i],
 				function(data){
-					console.timeEnd("Downloading " + this.url);
+					console.timeEnd("Bulkloading Dataset " + this.url);
 					try {
 					    bulkload(this.url, data);					
 				        numberToGo--;
 				        if (numberToGo == 0) {
 				            // We've bulkloaded everything. Now really render local
-				            $(me).reallyRenderLocal(datasource, dataset, query);
+				            $(me).reallyQueryLocal(datasource, dataset, query);
 				        }
 			        }
 			        catch(err) {
@@ -108,18 +108,16 @@ jQuery.fn.renderLocal = function(datasource, dataset, query) {
 
 	// OK. Now we've got the
 	if (hadToLoad == 0) {
-        $(me).reallyRenderLocal(datasource, dataset, query);	    
+        $(me).reallyQueryLocal(datasource, dataset, query);	    
 	} 
 }
 
-jQuery.fn.reallyRenderLocal = function(datasource, dataset, query) {
+jQuery.fn.reallyQueryLocal = function(datasource, dataset, query) {
     // Query the database.
-    console.time("Querying " + query);
+    console.time("Querying Local Database: " + query);
     var result = db.execute(query);
     var me = this;
-    console.timeEnd("Querying " + query);
     
-    console.time("Converting to JSON " + query);
     // This is going to hurt in performance time
     var rows = new Array();
     var fields = new Array();
@@ -142,20 +140,23 @@ jQuery.fn.reallyRenderLocal = function(datasource, dataset, query) {
     }
     result.close();
     var json = {'query':rows};
-    console.timeEnd("Converting to JSON " + query);
-    console.log(json);
+    console.timeEnd("Querying Local Database: " + query);
     $(me).templateData(json);        
 }
 
-jQuery.fn.renderRemote = function(datasource, dataset, query) {
+jQuery.fn.queryRemote = function(datasource, dataset, query) {
 	var me = this;
-	console.time("Querying Server");
+	var label = $('#label').val();
+	console.time("Query Remote Database");
 	if ((dataset === undefined) && (query === undefined)) {
 		// Render with just the datasource
 		$.getJSON(
 			datasource,
+			{
+			    "label":label
+			},
 			function(data){
-				console.timeEnd("Querying Server");
+				console.timeEnd("Query Remote Database");
 				try {
     				$(me).templateData(data);				    
 				}
@@ -170,10 +171,11 @@ jQuery.fn.renderRemote = function(datasource, dataset, query) {
 		$.getJSON(
 			datasource,
 			{
-				"uri":dataset
+				"uri":dataset,
+				"label":label
 			},
 			function(data){
-				console.timeEnd("Querying Server");
+				console.timeEnd("Query Remote Database");
 				try {
     				$(me).templateData(data);				    
 				}
@@ -189,10 +191,11 @@ jQuery.fn.renderRemote = function(datasource, dataset, query) {
 			datasource,
 			{
 				"uri":dataset,
-				"query":query
+				"query":query,
+				"label":label
 			},
 			function(data){
-				console.timeEnd("Querying Server");
+				console.timeEnd("Query Remote Database");
 				try {
     				$(me).templateData(data);				    
 				}
@@ -204,7 +207,7 @@ jQuery.fn.renderRemote = function(datasource, dataset, query) {
 	}
 }
 
-jQuery.fn.render = function() {
+jQuery.fn.renderTemplate = function() {
 	console.time("Rendering Template");
     var templateString = this.template();
     var value = this.templateData();
@@ -216,14 +219,14 @@ jQuery.fn.render = function() {
     this.html(rendered);
 	console.timeEnd("Rendering Template");
 }
+
 function mergeTemplates() {
     try {
         window.db = google.gears.factory.create('beta.database');
         db.open('backstage');
-
-	    $("[datasource]").each(function(i) {
-		    $(this).templateRemote($(this).attr('template'));
-            $(this).renderRemote($(this).attr('datasource'), $(this).attr('dataset'), $(this).attr('query'));
+        $("[datasource]").each(function(i) {
+            $(this).templateRemote($(this).attr('template'));
+            $(this).queryLocal($(this).attr('datasource'), $(this).attr('dataset'), $(this).attr('query'));
 	    });
     }
     catch(err) {

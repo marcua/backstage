@@ -706,7 +706,6 @@ table#outerbody #content-2-wide #main {
     <input type="submit"  id="nb15go_image"  alt="go" value="go" title="go">
    </form>
 	<button onClick="resetDatabase(); return false;" >Reset DB</button>
-	<input type="text" id="label" value="label" />
   </div>
  </div>
 </div>
@@ -733,12 +732,20 @@ ul li {
 
 <p><b>Search Results</b><p>
 
-<div 
-	datasource="http://backstage.local/ask?callback=?" 
-	dataset="http://backstage.local/data/movies.csv,http://backstage.local/data/directors.csv"
-	template="fakemovies.dss" 
-	query="SELECT movies.title AS title, movies.year AS year, directors.director AS director FROM movies, directors WHERE movies.director = directors.director"
-</div>
+{.section query}
+<table>
+{.repeated section @}
+<tr> 
+	<td>{title}</td>
+	<td>({year})</td>
+	<td><i>{director}</i></td>
+</tr>	
+
+{.end}
+</table>    
+{.or}	 	
+	<p><em>(No page content matches)</em></p>
+{.end}
 
 </td>
 </tr>

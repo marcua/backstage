@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sqlite
+import sqlite3
 import urllib2
 import csv
 import cgi
@@ -54,7 +54,7 @@ def myapp(environ, start_response):
     if 'callback' in args:
       callback = args['callback'][0]
 
-    con = sqlite.connect('mydatabase.db')
+    con = sqlite3.connect('mydatabase.db')
     cur = con.cursor()
     table_uris = uri.split(',')
     tables = [load_table(uri, cur) for uri in table_uris]
