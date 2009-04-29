@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sqlite3
+import sqlite
 import urllib2
 import csv
 import cgi
@@ -62,7 +62,7 @@ def build_json(headings, allresults, callback):
   return return_str
 
 def load_template(templatefile):
-  return "".join(open(templatefile).readlines())
+  return "".join(urllib2.urlopen(templatefile).readlines())
 
 def build_template(headings, allresults, template_str):
   results = build_structure(headings, allresults)
@@ -70,7 +70,6 @@ def build_template(headings, allresults, template_str):
   return ""
 
 def myapp(environ, start_response):
-    start_response('200 OK', [('Content-Type', 'text/plain')])
     args = cgi.parse_qs(environ['QUERY_STRING'])
     
     query = args['query'][0]
@@ -85,7 +84,7 @@ def myapp(environ, start_response):
     if 'templatefile' in args:
       templatefile = args['templatefile'][0]
 
-    con = sqlite3.connect('mydatabase.db')
+    con = sqlite.connect('mydatabase.db')
     cur = con.cursor()
     table_uris = uri.split(',')
     tables = [load_table(uri, cur) for uri in table_uris]
@@ -99,6 +98,7 @@ def myapp(environ, start_response):
     headings = [name[0] for name in cur.description]
     return_str = ""
     if templatefile != None:
+      start_response('200 OK', [('Content-Type', 'text/html')])
       before = time.time()
       template_str = load_template(templatefile)
       after = time.time()
@@ -108,6 +108,7 @@ def myapp(environ, start_response):
       after = time.time()
       log.write("%s: template rendering time %f\n" % (label, after - before))
     else:
+      start_response('200 OK', [('Content-Type', 'text/plain')])
       before = time.time()
       return_str = build_json(headings, allresults, callback)
       after = time.time()
