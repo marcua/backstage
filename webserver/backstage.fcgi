@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sqlite
+import sqlite3
 import urllib2
 import csv
 import cgi
@@ -72,7 +72,7 @@ def build_template(headings, allresults, template_str):
 def myapp(environ, start_response):
     start_response('200 OK', [('Content-Type', 'text/plain')])
     args = cgi.parse_qs(environ['QUERY_STRING'])
-
+    
     query = args['query'][0]
     uri = args['uri'][0]
     callback = None
@@ -85,7 +85,7 @@ def myapp(environ, start_response):
     if 'templatefile' in args:
       templatefile = args['templatefile'][0]
 
-    con = sqlite.connect('mydatabase.db')
+    con = sqlite3.connect('mydatabase.db')
     cur = con.cursor()
     table_uris = uri.split(',')
     tables = [load_table(uri, cur) for uri in table_uris]

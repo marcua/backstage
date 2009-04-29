@@ -1,0 +1,15 @@
+{.section query}
+<table>
+{.repeated section @}
+<tr> 
+	<td>{title}</td>
+	<td>({year})</td>
+	<td><i>{director}</i></td>
+</tr>	
+
+{.end}
+</table>    
+{.or}	 	
+	<p><em>(No page content matches)</em></p>
+{.end}
+
